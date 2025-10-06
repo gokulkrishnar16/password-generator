@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Password Generator - Cleaner UI</title>
+<link href="https://fonts.googleapis.com/css?family=Poppins:400,500,700&display=swap" rel="stylesheet" />
+<style id="main-style">
+  body {
+    background: linear-gradient(#101020, #202020);
+    color: #24A1DE;
+    font-family: 'Poppins', Arial, sans-serif;
+    margin: 0;
+    font-size: 18px;
+  }
+  .container {
+    background: #18181F;
+    border-radius: 14px;
+    box-shadow: 0 0 36px #37A8A040;
+    margin: 40px auto;
+    padding: 36px 32px 36px 32px;
+    width: 360px;
+    min-height: 460px;
+  }
+  h1 {
+    text-align: center;
+    color: #3390ec;
+    margin-bottom: 24px;
+    font-weight: 700;
+    letter-spacing: 1.1px;
+  }
+  /* Grouped sections for better visual flow */
+  .section {
+    margin-bottom: 24px;
+  }
+  label {
+    font-weight: 600;
+    margin-bottom: 8px;
+    display: block;
+    color: #37A8A0;
+  }
+  select, input[type="text"], input[type="password"] {
+    width: 100%;
+    margin-top: 6px;
+    margin-bottom: 16px;
+    padding: 14px 16px;
+    background: #222233;
+    color: #37A8A0;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    outline: none;
+    transition: box-shadow 0.2s;
+  }
+  select:focus, input:focus {
+    box-shadow: 0 0 5px #24A1DE;
+  }
+  button {
+    background: #7661C2;
+    color: #fff;
+    border-radius: 40px;
+    padding: 14px 0;
+    width: 100%;
+    border: none;
+    font-size: 18px;
+    font-family: inherit;
+    margin: 14px 0 24px 0;
+    cursor: pointer;
+    transition: background 0.3s;
+    box-shadow: 0 6px 16px #37A8A090;
+    font-weight: 600;
+  }
+  button:hover {
+    background: #5F8AAC;
+  }
+  .options {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+  .options label {
+    flex: 1 1 48%;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-weight: 600;
+    color: #60b7d6;
+    user-select: none;
+  }
+  .options input[type="checkbox"] {
+    margin-right: 10px;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+  }
+  .strength-meter {
+    margin-top: -6px;
+    margin-bottom: 24px;
+    height: 16px;
+    background: #333344;
+    border-radius: 9px;
+    overflow: hidden;
+    box-shadow: 0 0 8px #2d8cf090;
+  }
+  .strength-bar {
+    height: 100%;
+    width: 0%;
+    background: #24A1DE;
+    border-radius: 9px;
+    transition: width 0.5s ease, background 0.4s ease;
+  }
+  .history-panel {
+    background: #232340;
+    color: #fff;
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-top: 14px;
+    max-height: 200px;
+    overflow-y: auto;
+    box-shadow: 0 6px 14px #7661C240;
+    display: none;
+    font-size: 15px;
+    line-height: 1.5;
+  }
+  .bubble {
+    background: #5F8AAC;
+    color: #fff;
+    border-radius: 22px 22px 6px 22px;
+    margin-bottom: 12px;
+    padding: 12px 18px;
+    box-shadow: 0 0 10px #24A1DE30;
+    position: relative;
+    word-break: break-word;
+  }
+  .bubble time {
+    font-size: 11px;
+    color: #cadffb;
+    position: absolute;
+    right: 18px;
+    bottom: 6px;
+  }
+  .lock-msg {
+    color: #D4904F;
+    font-size: 15px;
+    margin-top: 12px;
+    text-align: center;
+    min-height: 24px;
+  }
+  .top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 28px;
+  }
+  .top-row > div {
+    flex-grow: 1;
+    max-width: 48%;
+  }
+  .top-row label {
+    color: #60b7d6;
+    font-weight: 700;
+    font-size: 14px;
+    margin-bottom: 6px;
+    display: block;
+  }
+  .top-row select {
+    padding: 12px 16px;
+    font-size: 16px;
+  }
+  /* Light theme override */
+  body.light {
+    background: linear-gradient(#f9fafb, #dcdde1);
+    color: #2c3e50;
+  }
+  body.light .container {
+    background: #fefefe;
+    box-shadow: 0 0 18px #bbb;
+  }
+  body.light h1 {
+    color: #1a73e8;
+  }
+  body.light select, body.light input {
+    background: #f1f3f4;
+    color: #2c3e50;
+    border: 1px solid #ddd;
+  }
+  body.light select:focus, body.light input:focus {
+    box-shadow: 0 0 6px #1a73e8;
+  }
+  body.light .strength-meter {
+    background: #e4e7eb;
+  }
+  body.light .strength-bar {
+    background: #1a73e8;
+  }
+  body.light .bubble {
+    background: #d5e3fc;
+    color: #1c2a48;
+  }
+  body.light .history-panel {
+    background: #eaf0fb;
+    color: #1c2a48;
+    box-shadow: 0 6px 14px #a2b4ea;
+  }
+</style>
+</head>
+<body>
+<!-- Master Password Setup Modal -->
+<div id="setup-modal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:#000c; z-index:100; align-items:center; justify-content:center;">
+  <div style="background:#18181f; padding:32px 28px; border-radius:14px; box-shadow:0 0 52px #37A8A080; width:340px; max-width:90vw;">
+    <h2 style="color:#3390ec; text-align:center; margin-bottom: 22px; font-weight: 700; letter-spacing: 0.8px;">Setup Master Password</h2>
+    <label>Enter new master password:</label>
+    <input type="password" id="setup-master" style="margin-bottom: 18px; font-size: 16px;" />
+    <label>Confirm master password:</label>
+    <input type="password" id="setup-confirm" style="margin-bottom: 22px; font-size: 16px;" />
+    <button onclick="setMasterPassword()">Set Password</button>
+    <div id="setup-msg" style="color:#d4904f; font-size: 15px; margin-top: 14px; text-align:center; min-height: 22px;"></div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="top-row section">
+    <div>
+      <label for="themeSelect">Theme</label>
+      <select id="themeSelect" aria-label="Select Theme">
+        <option value="dark">Radeon/Telegram Dark</option>
+        <option value="light">Light</option>
+      </select>
+    </div>
+    <div>
+      <label for="fontSizeSelect">Text Size</label>
+      <select id="fontSizeSelect" aria-label="Select Text Size">
+        <option value="16">Small</option>
+        <option value="20">Medium</option>
+        <option value="26">Large</option>
+      </select>
+    </div>
+  </div>
+  <h1>Password Generator</h1>
+
+  <div class="section">
+    <label for="size">Password Length</label>
+    <select id="size" aria-label="Select password length">
+      <option value="8">Small (8)</option>
+      <option value="12">Medium (12)</option>
+      <option value="16">Large (16)</option>
+      <option value="20">Very Large (20)</option>
+    </select>
+    <div class="options" aria-label="Password character type options">
+      <label><input type="checkbox" id="lowercase" checked />Lowercase</label>
+      <label><input type="checkbox" id="uppercase" checked />Uppercase</label>
+      <label><input type="checkbox" id="numbers" checked />Numbers</label>
+      <label><input type="checkbox" id="symbols" checked />Symbols</label>
+    </div>
+  </div>
+
+  <button onclick="generatePassword()">Generate Password</button>
+
+  <div class="section">
+    <label for="password">Generated Password</label>
+    <input id="password" type="text" readonly aria-live="polite" aria-label="Generated password" />
+  </div>
+
+  <div class="strength-meter" aria-hidden="true">
+    <div id="strength-bar" class="strength-bar"></div>
+  </div>
+
+  <div class="section">
+    <label for="master-pwd">Password History (Master Password Required)</label>
+    <input type="password" id="master-pwd" placeholder="Enter master password" aria-label="Master password to show password history" />
+    <button onclick="showHistory()">Show History</button>
+    <div id="lock-msg" class="lock-msg" aria-live="assertive" role="alert"></div>
+    <div id="history-panel" class="history-panel" aria-live="polite"></div>
+  </div>
+</div>
+<script>
+  async function sha256(str) {
+    const buf = new TextEncoder('utf-8').encode(str);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', buf);
+    return Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
+  }
+  let masterPasswordHash = localStorage.getItem('master_pwd_hash');
+  window.onload = function () {
+    setFontSize(document.getElementById('fontSizeSelect').value);
+    if (!masterPasswordHash) document.getElementById('setup-modal').style.display = 'flex';
+  };
+  async function setMasterPassword() {
+    const pwd = document.getElementById('setup-master').value.trim();
+    const confirm = document.getElementById('setup-confirm').value.trim();
+    const msg = document.getElementById('setup-msg');
+    if (!pwd || pwd.length < 5) {
+      msg.textContent = 'Password must be at least 5 characters.';
+      return;
+    }
+    if (pwd !== confirm) {
+      msg.textContent = 'Passwords do not match.';
+      return;
+    }
+    const hash = await sha256(pwd);
+    localStorage.setItem('master_pwd_hash', hash);
+    masterPasswordHash = hash;
+    msg.textContent = 'Master password set!';
+    setTimeout(() => {
+      document.getElementById('setup-modal').style.display = 'none';
+      msg.textContent = '';
+    }, 1100);
+  }
+  function getSelectedCharTypes() {
+    let chars = '';
+    if (document.getElementById('lowercase').checked) chars += 'abcdefghijklmnopqrstuvwxyz';
+    if (document.getElementById('uppercase').checked) chars += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    if (document.getElementById('numbers').checked) chars += '0123456789';
+    if (document.getElementById('symbols').checked) chars += '!@#$%^&*()_+~`|}{[]:;?><,./-=';
+    return chars;
+  }
+  function password_generator(len) {
+    let characters = getSelectedCharTypes();
+    if (!characters) {
+      alert('Select at least one character type!');
+      return '';
+    }
+    let password = '';
+    // Guarantee at least one from each selected type
+    let musts = '';
+    if (document.getElementById('lowercase').checked) musts += 'abcdefghijklmnopqrstuvwxyz';
+    if (document.getElementById('uppercase').checked) musts += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    if (document.getElementById('numbers').checked) musts += '0123456789';
+    if (document.getElementById('symbols').checked) musts += '!@#$%^&*()_+~`|}{[]:;?><,./-=';
+    password = Array.from(musts).map(c => c[Math.floor(Math.random() * c.length)] || c[0]).join('');
+    // Fill remaining length
+    for (let i = password.length; i < len; i++) {
+      password += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    // Shuffle for randomness
+    return password.split('').sort(() => 0.5 - Math.random()).join('').slice(0, len);
+  }
+  function assessStrength(password) {
+    const hasLower = /[a-z]/.test(password);
+    const hasUpper = /[A-Z]/.test(password);
+    const hasNum = /[0-9]/.test(password);
+    const hasSym = /[^a-zA-Z0-9]/.test(password);
+    let score = password.length;
+    let color = '#aba222';
+    if (password.length >= 16 && hasLower && hasUpper && hasNum && hasSym) {
+      score = 100;
+      color = '#20cc99';
+    } else if (password.length >= 12 && hasLower + hasUpper + hasNum + hasSym >= 3) {
+      score = 66;
+      color = '#3390ec';
+    } else if (password.length >= 8 && hasLower + hasUpper + hasNum + hasSym >= 2) {
+      score = 33;
+      color = '#abab22';
+    } else {
+      score = 15;
+      color = '#884256';
+    }
+    return { score, color };
+  }
+  function updateStrengthMeter(password) {
+    const strength = assessStrength(password);
+    const bar = document.getElementById('strength-bar');
+    bar.style.width = strength.score + '%';
+    bar.style.background = strength.color;
+  }
+  function generatePassword() {
+    const size = document.getElementById('size').value;
+    const pwd = password_generator(parseInt(size));
+    if (!pwd) return;
+    document.getElementById('password').value = pwd;
+    updateStrengthMeter(pwd);
+    storeHistory(pwd);
+  }
+  function storeHistory(pwd) {
+    let hist = JSON.parse(localStorage.getItem('pwd_history') || '[]');
+    hist.push({ pwd: pwd, time: new Date().toLocaleString() });
+    localStorage.setItem('pwd_history', JSON.stringify(hist));
+  }
+  async function showHistory() {
+    const master = document.getElementById('master-pwd').value;
+    const lockMsg = document.getElementById('lock-msg');
+    const histPanel = document.getElementById('history-panel');
+    lockMsg.textContent = '';
+    if (!masterPasswordHash) {
+      lockMsg.textContent = 'Master password not set up.';
+      return;
+    }
+    const userHash = await sha256(master);
+    if (userHash === masterPasswordHash) {
+      const hist = JSON.parse(localStorage.getItem('pwd_history') || '[]');
+      histPanel.innerHTML = hist.length
+        ? hist
+            .slice()
+            .reverse()
+            .map((h) => `<div class="bubble">${h.pwd}<time>${h.time}</time></div>`)
+            .join('')
+        : '<div class="bubble">No password history yet.</div>';
+      histPanel.style.display = 'block';
+    } else {
+      histPanel.style.display = 'none';
+      lockMsg.textContent = 'Incorrect master password.';
+    }
+  }
+  document.getElementById('themeSelect').addEventListener('change', function () {
+    document.body.className = this.value;
+  });
+  document.getElementById('fontSizeSelect').addEventListener('change', function () {
+    setFontSize(this.value);
+  });
+  function setFontSize(size) {
+    document.body.style.fontSize = size + 'px';
+  }
+</script>
+</body>
+</html>
