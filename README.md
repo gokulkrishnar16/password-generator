@@ -1,56 +1,38 @@
-Password Generator
-A secure and customizable password generator featuring:
+# 🔐 Password Generator
 
-Adjustable password length (8 to 20 characters)
+Welcome to your secure and customizable password generator! Effortlessly create strong passwords tailored to your needs.
 
-Selectable character types: lowercase, uppercase, numbers, and symbols
+## Features ✨
 
-Password strength meter with color indicators
+- Adjustable password length: 8 to 20 characters
+- Selectable character sets: lowercase, uppercase, numbers & symbols
+- Real-time strength meter with clear color indicators
+- Password history saved securely & viewable with a master password
+- Sleek theme switcher: Radeon/Telegram dark mode and elegant light mode
+- Adjustable text size for comfortable viewing
+- Built with modern **HTML5**, **CSS3** (using the Poppins font), and **JavaScript ES6**
 
-Password history stored and viewable with master password protection
+## How to Use 🚀
 
-Theme switcher: dark (Radeon/Telegram style) and light themes
+1. Pick your preferred **theme** and **text size**
+2. Choose a **password length** from 8 to 20 characters
+3. Select the desired **character types** (lowercase, uppercase, numbers, symbols)
+4. Click **Generate Password**
+5. View your **generated password** in the box below
+6. *(Optional)* Set up a **master password** to save & securely view password history
 
-Adjustable text size for better accessibility
+## Master Password Setup 🔐
 
-Built with HTML, CSS (Poppins font), and JavaScript
+- On first use, you're prompted to create a master password to keep your password history safe.
+- Use this master password anytime to access your saved password history.
 
-Features
-Generates strong random passwords based on user settings
+## Technology Stack 💻
 
-Enforces at least one character from each selected type for stronger passwords
+- HTML5 and CSS3 (with Google Font: Poppins)
+- JavaScript ES6 leveraging Web Crypto API for secure SHA-256 hashing
+- localStorage for encrypted password history and master password hash persistence
 
-Visual strength meter evaluates password complexity
+---
 
-Password history securely stored in localStorage and requires a master password to view
+*This project was created with the help of AI.*
 
-Clean and modern UI with responsive design for usability
-
-Easy theme and font size selection
-
-Usage
-Select your preferred theme and text size
-
-Choose password length from dropdown (8 to 20 characters)
-
-Select character types to include in the password
-
-Click "Generate Password"
-
-View generated password in the text box
-
-(Optional) Set and use a master password to save and view password history
-
-Setup Master Password
-On first use, set a master password to protect your saved password history
-
-Enter master password to reveal history
-
-Technologies
-HTML5
-
-CSS3 with google font Poppins
-
-JavaScript ES6 with Web Crypto API for SHA-256 hashing
-
-LocalStorage for persistent password history and master password hash
