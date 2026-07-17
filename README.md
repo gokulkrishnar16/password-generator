@@ -18,7 +18,7 @@ Welcome to your secure and customizable password generator! Effortlessly create 
 
 ## How to Use 🚀
 
-1. Pick your preferred **theme** and **text size**
+1. Pick your preferred **theme** 
 2. Choose a **password length** from 8 to 20 characters
 3. Select the desired **character types** (lowercase, uppercase, numbers, symbols)
 4. Click **Generate Password**
