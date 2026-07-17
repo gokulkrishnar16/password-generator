@@ -1,3 +1,7 @@
+
+
+https://github.com/user-attachments/assets/cd0861ae-174e-4b15-9b02-2726eeceaf1e
+
 # 🔐 Password Generator
 
 Welcome to your secure and customizable password generator! Effortlessly create strong passwords tailored to your needs.
