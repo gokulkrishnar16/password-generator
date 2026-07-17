@@ -3,41 +3,51 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Professional Password Vault & Generator</title>
+  <title>Enterprise Password Vault & Generator</title>
   <style>
     :root {
-      --bg-gradient: linear-gradient(135deg, #0f172a, #1e293b);
-      --card-bg: #1e293b;
-      --text-main: #f8fafc;
-      --text-muted: #94a3b8;
+      --bg-gradient: linear-gradient(135deg, #090d16, #111827);
+      --card-bg: #1f2937;
+      --text-main: #f9fafb;
+      --text-muted: #9ca3af;
       --primary: #6366f1;
       --primary-hover: #4f46e5;
       --accent: #0ea5e9;
-      --border: #334155;
-      --input-bg: #0f172a;
+      --border: #374151;
+      --input-bg: #111827;
       
       --strength-weak: #ef4444;
       --strength-medium: #f59e0b;
       --strength-strong: #10b981;
+
+      /* Amber warning colors */
+      --warning-bg: rgba(245, 158, 11, 0.08);
+      --warning-border: rgba(245, 158, 11, 0.25);
+      --warning-text: #f59e0b;
     }
 
     body.light {
-      --bg-gradient: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+      --bg-gradient: linear-gradient(135deg, #f3f4f6, #e5e7eb);
       --card-bg: #ffffff;
-      --text-main: #0f172a;
-      --text-muted: #64748b;
+      --text-main: #111827;
+      --text-muted: #6b7280;
       --primary: #4f46e5;
       --primary-hover: #4338ca;
       --accent: #0284c7;
-      --border: #e2e8f0;
-      --input-bg: #f8fafc;
+      --border: #e5e7eb;
+      --input-bg: #f9fafb;
+
+      /* Amber warning light theme colors */
+      --warning-bg: #fffbeb;
+      --warning-border: #fde68a;
+      --warning-text: #b45309;
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+      transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
     }
 
     body {
@@ -51,35 +61,66 @@
       padding: 20px;
     }
 
-    .container {
+    /* Main Responsive Container */
+    .app-container {
       background: var(--card-bg);
       border: 1px solid var(--border);
-      border-radius: 16px;
-      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      border-radius: 20px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
       width: 100%;
-      max-width: 440px;
-      padding: 32px;
+      max-width: 900px;
+      overflow: hidden;
     }
 
+    /* Top Bar for Global Controls */
     .top-bar {
       display: flex;
       justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 24px;
+      align-items: center;
+      padding: 20px 32px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(0, 0, 0, 0.1);
     }
 
-    .control-group {
-      flex: 1;
+    .brand-title {
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      color: var(--text-main);
+    }
+
+    .global-settings {
+      display: flex;
+      gap: 12px;
+    }
+
+    /* Top Disclaimer Banner */
+    .disclaimer-banner {
+      background-color: var(--warning-bg);
+      border-bottom: 1px solid var(--warning-border);
+      color: var(--warning-text);
+      padding: 12px 32px;
+      font-size: 13px;
+      font-weight: 500;
+      line-height: 1.4;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    .disclaimer-banner span.icon {
+      font-size: 15px;
+      flex-shrink: 0;
     }
 
     .control-group label {
-      font-size: 11px;
+      font-size: 10px;
       text-transform: uppercase;
       letter-spacing: 0.05em;
       color: var(--text-muted);
-      margin-bottom: 6px;
+      margin-bottom: 4px;
       display: block;
-      font-weight: 600;
+      font-weight: 700;
     }
 
     select, input[type="text"], input[type="password"] {
@@ -98,97 +139,119 @@
       box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
     }
 
-    h1 {
-      font-size: 22px;
-      font-weight: 700;
-      margin-bottom: 24px;
-      text-align: center;
-      letter-spacing: -0.025em;
+    /* Adaptive Split Grid Layout */
+    .grid-layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 32px;
+      padding: 32px;
     }
 
-    .section {
-      margin-bottom: 20px;
+    @media (min-width: 768px) {
+      .grid-layout {
+        grid-template-columns: 1.1fr 0.9fr;
+      }
     }
 
     .section-title {
-      font-size: 13px;
-      font-weight: 600;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
       color: var(--text-muted);
-      margin-bottom: 10px;
+      margin-bottom: 12px;
     }
 
-    /* Grid layout for character options */
+    .field-group {
+      margin-bottom: 20px;
+    }
+
+    /* Option Selection Grid */
     .options-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 10px;
+      gap: 12px;
+      margin-top: 8px;
     }
 
-    .option-checkbox {
+    .option-card {
       display: flex;
       align-items: center;
       gap: 10px;
-      padding: 10px 12px;
+      padding: 12px;
       background: var(--input-bg);
       border: 1px solid var(--border);
       border-radius: 8px;
       cursor: pointer;
       font-size: 13px;
+      font-weight: 500;
       user-select: none;
     }
 
-    .option-checkbox input {
+    .option-card input {
       accent-color: var(--primary);
       width: 16px;
       height: 16px;
       cursor: pointer;
     }
 
-    /* Main CTA Button */
+    /* Primary Action Buttons */
     .btn-primary {
-      display: block;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       width: 100%;
       background: var(--primary);
-      color: white;
+      color: #fff;
       border: none;
-      padding: 12px;
+      padding: 14px;
       border-radius: 8px;
       font-size: 15px;
       font-weight: 600;
       cursor: pointer;
-      margin-top: 10px;
-      margin-bottom: 20px;
+      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
     }
 
     .btn-primary:hover {
       background: var(--primary-hover);
     }
 
-    /* Output display box with Copy overlay */
+    /* Output Section Card */
+    .output-card {
+      background: var(--input-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 24px;
+    }
+
     .output-wrapper {
       position: relative;
       display: flex;
       align-items: center;
-      margin-bottom: 8px;
+      margin-top: 8px;
+      margin-bottom: 12px;
     }
 
     .output-wrapper input {
-      padding-right: 70px;
+      padding-right: 75px;
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-      font-weight: 500;
+      font-weight: 600;
       letter-spacing: 0.05em;
-      font-size: 15px;
+      font-size: 16px;
+      height: 48px;
+      border-color: var(--border);
     }
 
     .btn-copy {
       position: absolute;
-      right: 6px;
+      right: 8px;
       background: var(--primary);
       color: white;
       border: none;
-      padding: 6px 12px;
+      padding: 6px 14px;
       border-radius: 6px;
-      font-size: 11px;
+      font-size: 12px;
       font-weight: 600;
       cursor: pointer;
     }
@@ -197,15 +260,11 @@
       background: var(--primary-hover);
     }
 
-    /* Modern strength bar */
-    .strength-container {
-      margin-bottom: 24px;
-    }
-
+    /* Visual Strength Gauge */
     .strength-track {
       height: 6px;
       background: var(--border);
-      border-radius: 9999px;
+      border-radius: 999px;
       overflow: hidden;
     }
 
@@ -213,16 +272,11 @@
       height: 100%;
       width: 0%;
       background: var(--strength-weak);
-      border-radius: 9999px;
+      border-radius: 999px;
       transition: width 0.3s ease, background-color 0.3s ease;
     }
 
     /* History & Secure Panel */
-    .secure-section {
-      border-top: 1px solid var(--border);
-      padding-top: 20px;
-    }
-
     .history-trigger-row {
       display: flex;
       gap: 10px;
@@ -240,12 +294,16 @@
       padding: 10px 16px;
       border-radius: 8px;
       font-size: 13px;
-      font-weight: 500;
+      font-weight: 600;
       cursor: pointer;
     }
 
     .btn-secondary:hover {
-      background: var(--input-bg);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    body.light .btn-secondary:hover {
+      background: rgba(0, 0, 0, 0.05);
     }
 
     .status-msg {
@@ -253,7 +311,6 @@
       color: #ef4444;
       margin-top: 6px;
       min-height: 18px;
-      text-align: center;
     }
 
     .history-panel {
@@ -271,7 +328,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 8px 0;
+      padding: 10px 0;
       border-bottom: 1px solid var(--border);
       font-size: 13px;
     }
@@ -286,7 +343,7 @@
     }
 
     .history-time {
-      font-size: 10px;
+      font-size: 11px;
       color: var(--text-muted);
     }
 
@@ -297,12 +354,13 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(15, 23, 42, 0.85);
-      backdrop-filter: blur(4px);
+      background: rgba(9, 13, 22, 0.9);
+      backdrop-filter: blur(8px);
       z-index: 1000;
       display: flex;
       align-items: center;
       justify-content: center;
+      padding: 20px;
     }
 
     .modal-card {
@@ -311,21 +369,22 @@
       border-radius: 16px;
       padding: 32px;
       width: 100%;
-      max-width: 380px;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      max-width: 400px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
     }
 
     .modal-card h2 {
-      font-size: 18px;
+      font-size: 20px;
       margin-bottom: 16px;
       text-align: center;
     }
 
     .modal-card label {
-      font-size: 12px;
+      font-size: 11px;
       color: var(--text-muted);
       margin-bottom: 6px;
       display: block;
+      font-weight: 600;
     }
 
     .modal-card input {
@@ -335,98 +394,117 @@
 </head>
 <body>
 
-<!-- Setup Password Modal -->
+<!-- Master Password Setup Modal -->
 <div id="setup-modal" class="modal-overlay" style="display: none;">
   <div class="modal-card">
     <h2>Set Master Password</h2>
-    <label for="setup-master">Create Master Password (min. 5 chars)</label>
-    <input type="password" id="setup-master" />
+    <label for="setup-master">Create Master Password (min. 5 characters)</label>
+    <input type="password" id="setup-master" placeholder="At least 5 characters" />
     
     <label for="setup-confirm">Confirm Password</label>
-    <input type="password" id="setup-confirm" />
+    <input type="password" id="setup-confirm" placeholder="Confirm your key" />
     
-    <button class="btn-primary" onclick="setMasterPassword()" style="margin-bottom: 0;">Set Password</button>
-    <div id="setup-msg" class="status-msg"></div>
+    <button class="btn-primary" onclick="setMasterPassword()" style="margin-top: 10px;">Save Password</button>
+    <div id="setup-msg" class="status-msg" style="text-align: center;"></div>
   </div>
 </div>
 
-<div class="container">
-  <!-- Top Bar: Settings -->
+<div class="app-container">
+  <!-- Dynamic Top Bar -->
   <div class="top-bar">
-    <div class="control-group">
-      <label for="themeSelect">Theme</label>
-      <select id="themeSelect">
-        <option value="dark">Dark Theme</option>
-        <option value="light">Light Theme</option>
-      </select>
-    </div>
-    <div class="control-group">
-      <label for="fontSizeSelect">Text Size</label>
-      <select id="fontSizeSelect">
-        <option value="14">Small</option>
-        <option value="16" selected>Normal</option>
-        <option value="18">Large</option>
-      </select>
-    </div>
-  </div>
-
-  <h1>Secure Generator</h1>
-
-  <!-- Options -->
-  <div class="section">
-    <div class="control-group" style="margin-bottom: 14px;">
-      <label for="size">Password Length</label>
-      <select id="size">
-        <option value="8">8 Characters</option>
-        <option value="12" selected>12 Characters</option>
-        <option value="16">16 Characters</option>
-        <option value="20">20 Characters</option>
-        <option value="24">24 Characters</option>
-      </select>
-    </div>
-
-    <div class="section-title">Character Sets</div>
-    <div class="options-grid">
-      <label class="option-checkbox"><input type="checkbox" id="lowercase" checked />Lowercase</label>
-      <label class="option-checkbox"><input type="checkbox" id="uppercase" checked />Uppercase</label>
-      <label class="option-checkbox"><input type="checkbox" id="numbers" checked />Numbers</label>
-      <label class="option-checkbox"><input type="checkbox" id="symbols" checked />Symbols</label>
-    </div>
-  </div>
-
-  <button class="btn-primary" onclick="generatePassword()">Generate Secure Password</button>
-
-  <!-- Output Box -->
-  <div class="section">
-    <div class="section-title">Result</div>
-    <div class="output-wrapper">
-      <input id="password" type="text" readonly placeholder="Click Generate Above" />
-      <button class="btn-copy" id="copy-btn" onclick="copyPassword()">Copy</button>
-    </div>
-    
-    <!-- Strength Bar -->
-    <div class="strength-container">
-      <div class="strength-track">
-        <div id="strength-bar" class="strength-bar"></div>
+    <div class="brand-title">PassForge</div>
+    <div class="global-settings">
+      <div class="control-group">
+        <label for="themeSelect">Theme</label>
+        <select id="themeSelect">
+          <option value="dark">Dark</option>
+          <option value="light">Light</option>
+        </select>
+      </div>
+      <div class="control-group">
+        <label for="fontSizeSelect">Scale</label>
+        <select id="fontSizeSelect">
+          <option value="14">Small</option>
+          <option value="16" selected>Normal</option>
+          <option value="18">Large</option>
+        </select>
       </div>
     </div>
   </div>
 
-  <!-- Locked History -->
-  <div class="secure-section">
-    <div class="section-title">Encrypted History</div>
-    <label for="master-pwd" style="display:none;">Master Password</label>
-    <div class="history-trigger-row">
-      <input type="password" id="master-pwd" placeholder="Enter master key..." />
-      <button class="btn-secondary" onclick="showHistory()">Unlock</button>
+  <!-- Local Storage Disclaimer Banner -->
+  <div class="disclaimer-banner">
+    <span class="icon">⚠️</span>
+    <div>
+      <strong>Crucial Notice:</strong> Passwords and credentials are saved locally on your device. Clearing your browser cache, cookie storage, or site history will permanently delete your vault and master key setup.
     </div>
-    <div id="lock-msg" class="status-msg"></div>
-    <div id="history-panel" class="history-panel"></div>
+  </div>
+
+  <!-- Dual Column Grid Layout -->
+  <div class="grid-layout">
+    
+    <!-- LEFT SIDE: Generator Config Panel -->
+    <div class="panel-left">
+      <h1 style="display: none;">Generator Settings</h1>
+      
+      <div class="field-group">
+        <div class="section-title">Length Settings</div>
+        <select id="size">
+          <option value="8">8 Characters</option>
+          <option value="12" selected>12 Characters</option>
+          <option value="16">16 Characters</option>
+          <option value="20">20 Characters</option>
+          <option value="24">24 Characters</option>
+        </select>
+      </div>
+
+      <div class="field-group">
+        <div class="section-title">Security Layers</div>
+        <div class="options-grid">
+          <label class="option-card"><input type="checkbox" id="lowercase" checked />Lowercase</label>
+          <label class="option-card"><input type="checkbox" id="uppercase" checked />Uppercase</label>
+          <label class="option-card"><input type="checkbox" id="numbers" checked />Numbers</label>
+          <label class="option-card"><input type="checkbox" id="symbols" checked />Symbols</label>
+        </div>
+      </div>
+
+      <button class="btn-primary" onclick="generatePassword()" style="margin-top: 24px;">
+        Generate New Password
+      </button>
+    </div>
+
+    <!-- RIGHT SIDE: Results and History Panels -->
+    <div class="panel-right">
+      <div class="section-title">Output Dashboard</div>
+      
+      <div class="output-card">
+        <div class="output-wrapper">
+          <input id="password" type="text" readonly placeholder="Secure string ready..." />
+          <button class="btn-copy" id="copy-btn" onclick="copyPassword()">Copy</button>
+        </div>
+        
+        <!-- Interactive Strength Bar -->
+        <div class="strength-track">
+          <div id="strength-bar" class="strength-bar"></div>
+        </div>
+      </div>
+
+      <div class="section-title">Vault History</div>
+      <div class="field-group" style="margin-bottom: 0;">
+        <div class="history-trigger-row">
+          <input type="password" id="master-pwd" placeholder="Enter master key to decrypt..." />
+          <button class="btn-secondary" onclick="showHistory()">Decrypt</button>
+        </div>
+        <div id="lock-msg" class="status-msg"></div>
+        <div id="history-panel" class="history-panel"></div>
+      </div>
+    </div>
+
   </div>
 </div>
 
 <script>
-  // Utilities & State Management
+  // Utilities & Encryption Utilities
   async function sha256(str) {
     const buf = new TextEncoder('utf-8').encode(str);
     const hashBuffer = await crypto.subtle.digest('SHA-256', buf);
@@ -459,17 +537,17 @@
     const hash = await sha256(pwd);
     localStorage.setItem('master_pwd_hash', hash);
     masterPasswordHash = hash;
-    msg.style.color = '#10b981';
+    msg.style.color = 'var(--strength-strong)';
     msg.textContent = 'Master password saved!';
     
     setTimeout(() => {
       document.getElementById('setup-modal').style.display = 'none';
       msg.textContent = '';
-      msg.style.color = '#ef4444';
+      msg.style.color = 'var(--strength-weak)';
     }, 1000);
   }
 
-  // Purely Random & Safe Generation
+  // Purely Random & Safe Generation (Fisher-Yates)
   function generatePassword() {
     const len = parseInt(document.getElementById('size').value, 10);
     const useLower = document.getElementById('lowercase').checked;
@@ -490,7 +568,6 @@
     let combinedPool = '';
     let guaranteedChars = [];
 
-    // Correctly grab 1 guaranteed character per category and assemble pool
     if (useLower) {
       combinedPool += lowerPool;
       guaranteedChars.push(lowerPool[Math.floor(Math.random() * lowerPool.length)]);
@@ -508,13 +585,12 @@
       guaranteedChars.push(symPool[Math.floor(Math.random() * symPool.length)]);
     }
 
-    // Fill the rest of the password length
     let finalArray = [...guaranteedChars];
     for (let i = finalArray.length; i < len; i++) {
       finalArray.push(combinedPool[Math.floor(Math.random() * combinedPool.length)]);
     }
 
-    // Modern Fisher-Yates shuffle algorithm for maximum unpredictable entropy
+    // Shuffling elements for unpredictable outputs
     for (let i = finalArray.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [finalArray[i], finalArray[j]] = [finalArray[j], finalArray[i]];
@@ -565,7 +641,7 @@
   function storeHistory(pwd) {
     let hist = JSON.parse(localStorage.getItem('pwd_history') || '[]');
     hist.push({ pwd: pwd, time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) });
-    // Keep only the last 15 items
+    
     if (hist.length > 15) hist.shift();
     localStorage.setItem('pwd_history', JSON.stringify(hist));
   }
@@ -576,7 +652,7 @@
     const histPanel = document.getElementById('history-panel');
     
     lockMsg.textContent = '';
-    lockMsg.style.color = '#ef4444';
+    lockMsg.style.color = 'var(--strength-weak)';
 
     if (!masterPasswordHash) {
       lockMsg.textContent = 'Master password has not been initialized.';
@@ -597,12 +673,12 @@
             </div>
           `).join('');
       } else {
-        histPanel.innerHTML = '<div style="text-align:center; color:var(--text-muted); font-size:12px; padding:10px 0;">No passwords generated yet.</div>';
+        histPanel.innerHTML = '<div style="text-align:center; color:var(--text-muted); font-size:12px; padding:10px 0;">No history logged.</div>';
       }
       histPanel.style.display = 'block';
     } else {
       histPanel.style.display = 'none';
-      lockMsg.textContent = 'Incorrect master key.';
+      lockMsg.textContent = 'Incorrect decrypt key.';
     }
   }
 
@@ -622,7 +698,7 @@
     });
   }
 
-  // UI Event Handlers
+  // Theme & Layout Adjusters
   document.getElementById('themeSelect').addEventListener('change', function () {
     if (this.value === 'light') {
       document.body.classList.add('light');
@@ -636,7 +712,7 @@
   });
 
   function applyFontSize(size) {
-    document.querySelector('.container').style.fontSize = size + 'px';
+    document.querySelector('.app-container').style.fontSize = size + 'px';
   }
 </script>
 </body>
