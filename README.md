@@ -23,7 +23,7 @@ Welcome to your secure and customizable password generator! Effortlessly create 
 3. Select the desired **character types** (lowercase, uppercase, numbers, symbols)
 4. Click **Generate Password**
 5. View your **generated password** in the box below
-6. *(Optional)* Set up a **master password** to save & securely view password history
+  
 
 ## Master Password Setup 🔐
 
